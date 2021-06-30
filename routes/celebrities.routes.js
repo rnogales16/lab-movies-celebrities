@@ -3,15 +3,9 @@ const router = require("express").Router();
 const Celebrity = require("../models/Celebrity.model");
 // all your routes here
 
-router.get('/', (req, res) => {
-  Celebrity.find()
-  .then(oneCelebrity => res.render('./celebrities/celebrities', {oneCelebrity}))
-  .catch(err => console.log(err))
-})
-
 
 router.get('/create', (req, res) => {
-  res.render('./celebrities/new-celebrity')
+  res.render('celebrities/new-celebrity')
 });
 
 
@@ -25,6 +19,12 @@ router.post('/create', (req, res) => {
   })
 });
 
+
+router.get('/', (req, res) => {
+  Celebrity.find()
+  .then(oneCelebrity => res.render('celebrities/celebrities', {oneCelebrity}))
+  .catch(err => console.log(err))
+})
 
 
 
