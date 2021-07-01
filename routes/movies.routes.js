@@ -2,7 +2,7 @@
 const router = require("express").Router();
 const Movie = require("../models/Movie.model");
 const Celebrity = require("../models/Celebrity.model");
-
+const isLoggedIn = require('../middleware/isLoggedIn')
 
 // all your routes here
 
@@ -14,14 +14,14 @@ router.get('/', (req, res) => {
 })
 
 //route to show the form
-router.get('/create', (req, res) => {
+router.get('/create', isLoggedIn, (req, res) => {
   Celebrity.find()
   .then(allCelebrities => res.render('./movies/new-movie', {allCelebrities}))
   .catch(err => console.log(err))
 });
 
 //route to handle from data
-router.post('/create', (req, res) => {
+router.post('/create', isLoggedIn, (req, res) => {
   const {title, genre, plot, cast} = req.body
   Movie.create({title, genre, plot, cast})
   .then(newMovie => res.redirect('/movies'))
